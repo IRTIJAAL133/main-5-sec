@@ -2,51 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Continue to Partner Site</title>
-
-  <!-- Auto-redirect after 5 seconds -->
-  <meta http-equiv="refresh" content="5; url=https://t.co/TgjeeVdjRZ" />
-
   <style>
-    html,body{
-      margin:0;
-      padding:0;
-      height:100%;
-      width:100%;
-      background:#f7f9fc;
-      font-family:system-ui,sans-serif;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      cursor:pointer;             /* shows it's clickable */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #f7f9fc;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
-    h1,p{margin:.5rem;text-align:center;color:#333;}
-    small{color:#777;}
+
+    h1 {
+      font-size: 1.5rem;
+      color: #333;
+      margin: 0.5rem 0;
+    }
+
+    p {
+      color: #333;
+      margin: 0.3rem 0;
+    }
+
+    small {
+      color: #777;
+    }
+
+    button.play-button {
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      margin: 1rem 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    button.play-button:active {
+      transform: scale(0.95);
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.2rem; }
+      button.play-button { width: 70px; height: 70px; font-size: 1.5rem; }
+    }
   </style>
 </head>
-<body onclick="window.location.href='https://t.co/TgjeeVdjRZ'">
-
-  <!-- ✅ Imgur embed -->
-  <blockquote class="imgur-embed-pub" lang="en" data-id="JSYInfY">
-    <a href="https://imgur.com/JSYInfY">View post on imgur.com</a>
-  </blockquote>
-  <script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<body>
 
   <h1>You're leaving our site</h1>
-  <p>Redirecting in <strong id="count">5</strong> seconds… or tap/click anywhere to continue.</p>
+  <p>Redirecting in <strong id="count">5</strong> seconds…</p>
+
+  <!-- Play button -->
+  <button class="play-button" id="playButton">&#9658;</button>
+
   <p><small>By continuing, you acknowledge you are visiting a third-party site.</small></p>
 
   <script>
-    let s = 5;
-    const c = document.getElementById("count");
     const url = "https://t.co/TgjeeVdjRZ";
-    const t = setInterval(()=>{
-      s--;
-      c.textContent = s;
-      if(s<=0){ clearInterval(t); window.location.href=url; }
-    },1000);
+    let seconds = 5;
+    const countEl = document.getElementById("count");
+
+    // Countdown timer
+    const timer = setInterval(() => {
+      seconds--;
+      countEl.textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = url;
+      }
+    }, 1000);
+
+    // Redirect on button click
+    document.getElementById("playButton").addEventListener("click", () => {
+      window.location.href = url;
+    });
   </script>
 </body>
 </html>

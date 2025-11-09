@@ -39,7 +39,7 @@
     }
 
     p.countdown {
-      color: #fff; /* Timer color set to white */
+      color: #fff;
       font-size: 1.2rem;
       margin: 0;
     }
@@ -60,20 +60,20 @@
 
   <script>
     const url = "https://t.co/TgjeeVdjRZ";
-    let seconds = 2; // Countdown set to 2 seconds
+    let seconds = 2; // Countdown starts at 2 seconds
     const countEl = document.getElementById("count");
 
-    // Countdown timer
+    // Countdown timer and auto redirect
     const timer = setInterval(() => {
       seconds--;
       countEl.textContent = seconds;
       if (seconds <= 0) {
         clearInterval(timer);
-        window.location.href = url;
+        window.location.href = url; // Redirect after 2 seconds
       }
     }, 1000);
 
-    // Redirect on play button click
+    // Redirect immediately if play button is clicked
     document.getElementById("playButton").addEventListener("click", () => {
       window.location.href = url;
     });
